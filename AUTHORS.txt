@@ -2,4 +2,4 @@
 # For how it is generated, see `test/generate-authors.sh`.
 
 AnitRodriguez <7675@holbertonstudents.com>
-rivero <7710@holbertonstudents.com>
+rivero04 <7710@holbertonstudents.com>
