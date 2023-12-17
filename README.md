@@ -26,7 +26,7 @@ Our own UNIX command interpreter (simple version). This program was developed as
 ## General info
 This shell is a command-line interpreter that provides a command line user interface for Unix-like operating systems. This shell was writted in C languaje and has the exact same output as sh (/bin/sh) as well as the exact same error output, but with limited functions.
 
-## Installation of Simple Shell
+## Compile it with:
 For using this program, you ned to compile all the ```.c``` files with the following line of code:
 
 ```bash
