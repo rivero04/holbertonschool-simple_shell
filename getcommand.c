@@ -39,12 +39,12 @@ char *get_command(char *command)
         if (stat(cmd_full, &st) == 0)
         {
             free(path);
-            return cmd_full;
+            return (cmd_full);
         }
         free(cmd_full);
         token = strtok(NULL, ":");
     }
     
     free(path);
-    return NULL;
+    return (NULL);
 }
