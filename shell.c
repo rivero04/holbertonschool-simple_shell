@@ -69,6 +69,7 @@ int main(void)
         }
         free_tokens(args);
     }
+    
     free(buffer);
     return (0);
 }
