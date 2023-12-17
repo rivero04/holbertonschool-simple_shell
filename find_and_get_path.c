@@ -1,66 +1,90 @@
 /**
- * Searches for an executable command in the PATH.
+ * get_path - Searches for an executable command in the path
  *
- * Returns the full path if found, otherwise returns NULL.
+ * Return: full path
+ * @command_path: command
  */
-char *findCommandInPath(char *command_path) 
+
+char *get_path(char *command_path)
 {
-    char *path_token, *path = getenv("PATH");
+	char *path_token, *command, *path, *result;
 
-    if (path == NULL) {
-        fprintf(stderr, "Error: PATH environment variable is not set\n");
-        return NULL;
-    }
+	if (stat(command_path, &perms) == 0)
+		return (command_path);
 
-    path_token = strtok(path, ":");
-    while (path_token != NULL) {
-        char *full_path = malloc(strlen(path_token) + strlen(command_path) + 2);
-        if (full_path == NULL) {
-            fprintf(stderr, "Error: Failed to allocate memory\n");
-            return NULL;
-        }
+	path = getenv("PATH");
+	if (path == NULL)
+	{
+		fprintf(stderr, "Error: PATH environment variable is not set\n");
+		return (NULL);
+	}
 
-        sprintf(full_path, "%s/%s", path_token, command_path);
+	while (path != NULL)
+	{
+		path_token = strtok(NULL, ":");
+		path_token = strtok(path, ":");
+		while (path_token != NULL)
+		{
+			command = malloc(strlen(path_token) + strlen(command_path) + 2);
+			if (command == NULL)
+			{
+				fprintf(stderr, "Error: Failed to allocate memory\n");
+				return (NULL);
+			}
+			sprintf(command, "%s/%s", path_token, command_path);
 
-        if (access(full_path, X_OK) == 0) {
-            return full_path;
-        }
+			if (access(command, X_OK) == 0)
+			{
+			result = strdup(command);
+			free(command);
+			return (result);
+			}
 
-        free(full_path);
-        path_token = strtok(NULL, ":");
-    }
+			free(command);
+			path_token = strtok(NULL, ":");
+		}
+		path++;
+	}
 
-    return NULL;
+	return (command_path);
 }
 
 /**
- * Execute a command using the given command path and arguments.
+ * executepath - Execute a command using the given command path and arguments.
  *
- * Returns the exit status of the command.
+ * @command_path: The full path to the executable.
+ * @array: An array of strings representing the command and its arguments.
+ * Return: On success, returns the command_path
  */
-int executeWithPath(char *command_path, char **array) {
-    int return_value = 0;
-    struct stat perms;
 
-    if (stat(command_path, &perms) == 0) {
-        return_value = executeCommand(array[0], array);
-        return return_value;
-    } else {
-        command_path = findCommandInPath(array[0]);
-        if (command_path == NULL) {
-            printf("./hsh: 1: %s: not found", array[0]);
-            return -1;
-        }
+int executepath(char *command_path, char **array)
+{
+	int returnvalue = 0;
 
-        array[0] = command_path;
-
-        if (stat(array[0], &perms) == 0) {
-            return_value = executeCommand(array[0], array);
-        }
-
-        free(command_path);
-        return return_value;
+	if (array == NULL || array[0] == NULL)
+    {
+        return (-1);
     }
 
-    return -1;
+	if (stat(command_path, &perms) == 0)
+	{
+		returnvalue = executor(array[0], array);
+		return (returnvalue);
+	}
+	else
+	{
+		command_path = get_path(array[0]);
+		array[0] = command_path;
+
+		if (stat(array[0], &perms) == -1)
+			printf("./hsh: 1: %s: not found", array[0]);
+
+		if (stat(array[0], &perms) == 0)
+			returnvalue = executor(array[0], array);
+
+		free(command_path);
+		return (returnvalue);
+	}
+
+	return (-1);
 }
