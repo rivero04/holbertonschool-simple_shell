@@ -44,6 +44,7 @@ char *get_command(char *command)
         free(cmd_full);
         token = strtok(NULL, ":");
     }
+    
     free(path);
     return NULL;
 }
