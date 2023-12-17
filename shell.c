@@ -43,7 +43,7 @@ int main(void)
                 continue;
             }
             
-            status = executeWithPath(args);
+            status = execute_command(args);
 
             if (WIFEXITED(status) && WEXITSTATUS(status) == 2)
             {
