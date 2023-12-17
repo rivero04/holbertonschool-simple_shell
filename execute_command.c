@@ -1,8 +1,8 @@
 #include "shell.h"
-
 /**
  * execute_command - Execute a command.
  * @args: Array of strings containing the command and its arguments.
+ * @env: Array of strings containing the environment variables.
  *
  * Description:
  * This function forks a new process to execute a command specified in @args.
@@ -21,11 +21,9 @@ int execute_command(char **args)
 
     if (cmd == NULL)
     {
-        fprintf(stderr, "Command not found: %s\n", args[0]);
-        return -1;
+        printf("Command not found\n");
+        return (-1);
     }
-
-    printf("Executing command: %s\n", cmd);
 
     pid = fork();
 
@@ -36,7 +34,6 @@ int execute_command(char **args)
     }
     else if (pid == 0)
     {
-        printf("Child process: PID=%d\n", getpid());
         if (execve(cmd, args, environ) == -1)
         {
             perror("execve");
@@ -45,11 +42,8 @@ int execute_command(char **args)
     }
     else
     {
-        printf("Parent process: Waiting for child (PID=%d) to complete...\n", pid);
         waitpid(pid, &status, 0);
-        printf("Parent process: Child process (PID=%d) completed with status %d\n", pid, status);
     }
-
     free(cmd);
     return status;
 }
