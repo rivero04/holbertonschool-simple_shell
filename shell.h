@@ -17,8 +17,6 @@ void free_tokens(char **tokens);
 int execute_command(char **args);
 int main(void);
 void printenv(void);
-int executepath(char *command_path, char **array)
-char *get_path(char *command_path)
 
 #define PROMPT "(꒡⌓꒡)"
 
