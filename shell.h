@@ -17,7 +17,6 @@ void free_tokens(char **tokens);
 int execute_command(char **args);
 int main(void);
 void printenv(void);
-int cp_file(const char *source, const char *destination);
 
 #define PROMPT "(꒡⌓꒡)"
 
