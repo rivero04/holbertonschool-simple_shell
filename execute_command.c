@@ -44,7 +44,6 @@ int execute_command(char **args)
     {
         waitpid(pid, &status, 0);
     }
-
     free(cmd);
     return status;
 }
