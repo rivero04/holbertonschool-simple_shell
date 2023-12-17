@@ -16,7 +16,7 @@ char **split_string(char *buffer, char *del);
 void free_tokens(char **tokens);
 int execute_command(char **args);
 int main(void);
-void printenv(void)
+void printenv(void);
 
 #define PROMPT "(꒡⌓꒡)"
 
