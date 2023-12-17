@@ -44,8 +44,6 @@ int main(void)
             }
             
             status = execute_command(args);
-            status = executeWithPath(args[0], args);
-
 
             if (WIFEXITED(status) && WEXITSTATUS(status) == 2)
             {
